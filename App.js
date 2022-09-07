@@ -2,7 +2,7 @@ import * as React from "react";
 import MapView, { Callout, Marker, Circle } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import Slider from "@react-native-community/slider";
-
+import TestCallout from "./components/TestCallout";
 export default function App() {
   const [radius, setRadius] = React.useState(1000);
   const [range, setRange] = React.useState("50%");
@@ -36,16 +36,7 @@ export default function App() {
           }}
         >
           <Callout>
-            <View style="callout">
-              <View>
-                <Image
-                  style={{ width: 100, height: 100 }}
-                  resizeMode="cover"
-                  source={require("./assets/CalloutImage.jpg")}
-                />
-              </View>
-              <Text>Your Companion</Text>
-            </View>
+            <TestCallout name="Mihir" price="1" rating="5"/>
           </Callout>
         </Marker>
         <Circle
@@ -87,7 +78,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
   callout: {
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 120,
   },
 });
