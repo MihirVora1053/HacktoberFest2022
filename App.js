@@ -1,25 +1,28 @@
 import * as React from "react";
 import MapView, { Callout, Marker, Circle } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
+import Slider from "@react-native-community/slider";
 
 export default function App() {
+  const [radius, setRadius] = React.useState(1000);
+  const [range, setRange] = React.useState("50%");
   const [pin, setPin] = React.useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: 19.1379608,
+    longitude: 72.8397201,
   });
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: 19.1379608,
+          longitude: 72.8397201,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
         <Marker
-          //icon={require('./assets/CLogo.jpeg')}
+          icon={require("./assets/MarkerLogo.jpg")}
           coordinate={pin}
           draggable={true}
           onDragStart={(e) => {
@@ -33,16 +36,41 @@ export default function App() {
           }}
         >
           <Callout>
-            <Text>companion</Text>
+            <View style="callout">
+              <View>
+                <Image
+                  style={{ width: 100, height: 100 }}
+                  resizeMode="cover"
+                  source={require("./assets/CalloutImage.jpg")}
+                />
+              </View>
+              <Text>Your Companion</Text>
+            </View>
           </Callout>
         </Marker>
         <Circle
-          fillColor="rgba(255, 240, 0,0.4)"
-          radius={5000}
+          fillColor="#fcbc0533"
+          radius={radius}
           center={pin}
-          strokeColor="rgba(255,240,0,0.4)"
+          strokeColor="#fcbc05"
         />
       </MapView>
+      <Slider
+        style={{ width: 250, height: 40 }}
+        thumbImage={require("./assets/CLogo.jpg")}
+        minimumValue={1}
+        value={50}
+        maximumValue={100}
+        maximumTrackTintColor="#fcbc05"
+        minimumTrackTintColor="#fcbc05"
+        onValueChange={(value) => {
+          setRange(parseInt(value * 100));
+          console.log(range);
+        }}
+        onSlidingComplete={(value) => {
+          setRadius(100 * value);
+        }}
+      />
     </View>
   );
 }
@@ -57,5 +85,9 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+  },
+  callout: {
+    width: 200,
+    height: 200,
   },
 });
