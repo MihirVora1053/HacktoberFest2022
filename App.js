@@ -4,8 +4,10 @@ import { StyleSheet, Text, View, Dimensions, Image, Button } from "react-native"
 import Slider from "@react-native-community/slider";
 import TestCallout from "./components/TestCallout";
 import * as Location from 'expo-location';
-
-
+// import { GOOGLE_API } from './enviroment';
+// import { GooglePlacesAutocomplete,InputAutocompleterProps } from 'react-native-google-places-autocomplete';
+import  Constants  from 'expo-constants';
+import InputAutoCompletes from './components/InputAutoCompletes';
 
 export default function App() {
   const [radius, setRadius] = React.useState(1000);
@@ -104,6 +106,16 @@ export default function App() {
           strokeColor="#fcbc05"
         />
       </MapView>
+     
+     <View style={styles.search}>
+      
+      <InputAutoCompletes placeholder="Search" onPlaceSelected={()=>{}} />
+
+</View>
+
+
+
+
       <Slider
         style={{ width: 250, height: 40 }}
         thumbImage={require("./assets/CLogo.jpg")}
@@ -114,11 +126,9 @@ export default function App() {
         minimumTrackTintColor="#fcbc05"
         onValueChange={(value) => {
           setRange(parseInt(value * 100));
-          console.log(range);
-        }}
-        onSlidingComplete={(value) => {
           setRadius(100 * value);
         }}
+        
       />
       <View style={styles.button}>
       <Button onPress={handlePress} title="Current Location"/>
@@ -136,7 +146,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get("window").width,
-    height: 500,
+    height: "93%",
   },
   callout: {
     width: 80,
@@ -144,5 +154,13 @@ const styles = StyleSheet.create({
   },
   button:{
     marginBottom:"8%"
-  }
+  },
+  search: {
+    position: "absolute",
+    width: "90%",
+    backgroundColor: "white",
+    elevation: 4, 
+    borderRadius: 20,
+    top: Constants.statusBarHeight,
+    },
 });
